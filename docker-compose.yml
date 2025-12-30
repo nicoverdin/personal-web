@@ -1,26 +1,42 @@
-version: '3.8'
-
 services:
-  postgres:
-    container_name: postgres_db
-    image: postgres:latest
-    restart: always
+  db:
+    image: postgres:15
+    container_name: personal-web-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: portfolio
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d portfolio"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
+  backend:
+    build: ./backend
+    container_name: personal-web-backend
     ports:
-      - "8080:80"
+      - "3000:3000"
     environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      DATABASE_URL: "postgresql://user:password@db:5432/portfolio?schema=public"
+      JWT_SECRET: "clave-secreta-docker"
     depends_on:
-      - postgres
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    container_name: personal-web-frontend
+    ports:
+      - "3001:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
