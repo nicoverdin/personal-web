@@ -1,9 +1,10 @@
 import { Project } from '@/types/project';
 
 async function getProjects(): Promise<Project[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
   try {
+    console.log(`Fetching projects from: ${apiUrl}`);
     const res = await fetch(`${apiUrl}/projects`, {
       cache: 'no-store',
     });
