@@ -25,3 +25,12 @@ model Project {
 
   @@map("projects")
 }
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // Aquí guardaremos el hash encriptado, no la contraseña real
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
