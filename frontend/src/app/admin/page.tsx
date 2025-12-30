@@ -8,32 +8,28 @@ export default function AdminPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   
-  // Estado para el formulario
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     url: ''
   });
 
-  // 1. PROTECCIÓN DE RUTA 🛡️
   useEffect(() => {
     const token = Cookies.get('token');
     if (!token) {
-      router.push('/login'); // Si no hay pase, fuera.
+      router.push('/login');
     }
   }, [router]);
 
-  // Manejar cambios en los inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 2. ENVIAR PROYECTO 🚀
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const token = Cookies.get('token'); // Recuperamos el token de la cookie
+    const token = Cookies.get('token');
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
     try {
@@ -41,7 +37,7 @@ export default function AdminPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // 👈 AQUÍ ESTÁ LA LLAVE MAESTRA
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData),
       });
@@ -49,7 +45,7 @@ export default function AdminPage() {
       if (!res.ok) throw new Error('Error al crear proyecto');
 
       alert('¡Proyecto creado con éxito!');
-      setFormData({ title: '', description: '', url: '' }); // Limpiar formulario
+      setFormData({ title: '', description: '', url: '' });
       
     } catch (error) {
       alert('Error: No tienes permisos o el token ha expirado.');

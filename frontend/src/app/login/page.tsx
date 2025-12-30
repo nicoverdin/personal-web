@@ -1,4 +1,4 @@
-'use client'; // 👈 Importante: Esto es un componente interactivo (navegador)
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -7,20 +7,17 @@ import Cookies from 'js-cookie';
 export default function LoginPage() {
   const router = useRouter();
   
-  // Estados para manejar el formulario
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Función que se ejecuta al enviar el formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
     try {
-      // 1. Llamamos al Backend
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
       const res = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
@@ -34,12 +31,8 @@ export default function LoginPage() {
         throw new Error(data.message || 'Error al iniciar sesión');
       }
 
-      // 2. ¡Éxito! Guardamos el token en una Cookie
-      // 'token' es el nombre, data.access_token es el valor JWT
-      // { expires: 1 } significa que dura 1 día
       Cookies.set('token', data.access_token, { expires: 1 });
 
-      // 3. Redirigimos al usuario al futuro Panel de Admin
       router.push('/admin');
       
     } catch (err: any) {
@@ -57,7 +50,6 @@ export default function LoginPage() {
           <p className="text-gray-500 mt-2">Acceso exclusivo para el administrador</p>
         </div>
 
-        {/* Mensaje de Error */}
         {error && (
           <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center">
             {error}
