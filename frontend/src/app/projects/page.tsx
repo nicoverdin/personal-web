@@ -16,6 +16,12 @@ type Project = {
   repoUrl?: string | null;
 };
 
+// Función para limitar el texto de forma limpia
+const truncateDescription = (text: string, limit: number = 160) => {
+  if (text.length <= limit) return text;
+  return text.slice(0, limit).trim() + "...";
+};
+
 async function getProjects() {
   const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
   try {
@@ -56,7 +62,6 @@ export default async function ProjectsPage() {
         {/* GALERÍA (GRID) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
           {projects.map((project: Project) => (
-            // ✨ AQUÍ ESTÁ EL CAMBIO: Envolvemos todo en Link
             <Link key={project.id} href={`/projects/${project.id}`} className="group block h-full">
                 <article className="flex flex-col h-full cursor-pointer">
                 
@@ -69,7 +74,7 @@ export default async function ProjectsPage() {
                         fill 
                         className="object-cover transition-all duration-700 filter grayscale group-hover:grayscale-0 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        unoptimized // Mantenemos esto por si acaso Cloudinary sigue rebelde
+                        unoptimized 
                         />
                     ) : (
                         <div className="flex items-center justify-center h-full text-gray-300 font-mono text-xs tracking-widest uppercase">
@@ -81,14 +86,15 @@ export default async function ProjectsPage() {
                 {/* FICHA TÉCNICA */}
                 <div className="flex flex-col flex-grow">
                     <div className="flex justify-between items-baseline mb-3">
-                    <h2 className={`${playfair.className} text-2xl font-bold group-hover:underline decoration-1 underline-offset-4 transition-all`}>
+                    <h2 className={`${playfair.className} text-2xl font-bold group-hover:underline decoration-1 underline-offset-4 transition-all line-clamp-1`}>
                         {project.title}
                     </h2>
-                    <span className="text-xs font-mono text-gray-400">REF-{project.id.substring(0,4).toUpperCase()}</span>
+                    <span className="text-xs font-mono text-gray-400 shrink-0 ml-2">REF-{project.id.substring(0,4).toUpperCase()}</span>
                     </div>
                     
-                    <p className="text-sm text-gray-600 leading-relaxed mb-6 line-clamp-3 overflow-hidden font-light flex-grow">
-                      {project.description}
+                    {/* ✍️ DESCRIPCIÓN CORREGIDA */}
+                    <p className="text-sm text-gray-600 leading-relaxed mb-6 font-light flex-grow overflow-hidden line-clamp-3">
+                      {truncateDescription(project.description, 180)}
                     </p>
                     
                     <div className="pt-4 border-t border-dashed border-gray-300 mt-auto">
