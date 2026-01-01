@@ -19,7 +19,7 @@ export class PrismaProjectRepository implements ProjectRepository {
         repoUrl: project.repoUrl || null,
       },
     });
-    return ProjectMapper.toDomain(saved);
+    return new Project(saved as any);
   }
 
   async findAll(): Promise<Project[]> {
@@ -28,15 +28,25 @@ export class PrismaProjectRepository implements ProjectRepository {
   }
 
   async findById(id: string): Promise<Project | null> {
-    const raw = await this.prisma.project.findUnique({ where: { id } });
-    if (!raw) return null;
-    return ProjectMapper.toDomain(raw);
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+    });
+    
+    return project; 
   }
 
   async update(id: string, data: any): Promise<Project> {
     const updated = await this.prisma.project.update({
       where: { id },
-      data,
+      data: {
+        title: data.title,
+        description: data.description,
+        url: data.url || null,
+        image: data.image || null,
+        repoUrl: data.repoUrl || null,
+        
+        updatedAt: new Date(),
+      },
     });
     return new Project(updated as any);
   }

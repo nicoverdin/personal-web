@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsUrl, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsUrl, IsOptional, ValidateIf } from 'class-validator';
 
 export class CreateProjectDto {
   @IsString()
@@ -9,15 +9,18 @@ export class CreateProjectDto {
   @IsNotEmpty()
   description: string;
 
-  @IsUrl()
   @IsOptional()
+  @ValidateIf((o) => o.url !== "" && o.url !== null)
+  @IsUrl({}, { message: 'url must be a URL address' })
   url?: string;
 
-  @IsUrl()
   @IsOptional()
+  @ValidateIf((o) => o.image !== "" && o.image !== null)
+  @IsUrl({}, { message: 'image must be a URL address' })
   image?: string;
 
-  @IsUrl()
   @IsOptional()
+  @ValidateIf((o) => o.repoUrl !== "" && o.repoUrl !== null)
+  @IsUrl({}, { message: 'repoUrl must be a URL address' })
   repoUrl?: string;
 }
