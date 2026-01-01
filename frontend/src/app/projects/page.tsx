@@ -2,7 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Playfair_Display, Inter } from 'next/font/google';
 
-// Configuración de fuentes
+export const dynamic = 'force-dynamic'
+
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'] });
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500'] });
 
