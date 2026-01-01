@@ -4,6 +4,8 @@ export class Article {
   slug: string;
   content: string;
   isVisible: boolean;
+  excerpt: string;
+  coverImage: string;
   
   tags?: any[]; 
 

@@ -14,6 +14,8 @@ export class PrismaArticleRepository implements ArticleRepository {
         slug: article.slug,
         content: article.content,
         isVisible: article.isVisible,
+        excerpt: article.excerpt,
+        coverImage: article.coverImage,
       },
     });
     return new Article(saved as any);
@@ -41,6 +43,8 @@ export class PrismaArticleRepository implements ArticleRepository {
         content: data.content,
         isVisible: Boolean(data.isVisible),
         updatedAt: new Date(),
+        excerpt: data.excerpt,
+        coverImage: data.coverImage,
       },
     });
 
