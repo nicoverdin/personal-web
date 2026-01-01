@@ -2,6 +2,11 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { Playfair_Display, Inter } from 'next/font/google';
+
+// Configuración de fuentes
+const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'] });
+const inter = Inter({ subsets: ['latin'], weight: ['300', '400'] });
 
 type Article = {
   id: string;
@@ -27,11 +32,13 @@ export default function BlogPage() {
           const data = await res.json();
           if (Array.isArray(data)) {
             const published = data.filter((a: Article) => a.isVisible === true);
+            // Ordenar por fecha (más reciente primero)
+            published.sort((a: Article, b: Article) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
             setArticles(published);
           }
         }
       } catch (error) {
-        console.error("Error cargando el blog:", error);
+        console.error("Error loading blog:", error);
       } finally {
         setLoading(false);
       }
@@ -42,72 +49,80 @@ export default function BlogPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex justify-center items-center">
-        <p className="text-gray-500 text-xl">Cargando pensamientos...</p>
+      <div className={`min-h-screen bg-[#f4f3f0] flex justify-center items-center ${inter.className}`}>
+        <p className="text-[#1a1a1a] font-mono text-sm tracking-widest uppercase animate-pulse">Loading Archive...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl">
-            El Blog
+    <div className={`min-h-screen relative bg-[#f4f3f0] text-[#1a1a1a] ${inter.className}`}>
+      
+      {/* 🎨 TEXTURA DE FONDO */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-multiply fixed" 
+           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
+      </div>
+
+      <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 lg:py-28">
+        
+        {/* CABECERA */}
+        <div className="mb-20">
+          <h1 className={`${playfair.className} text-6xl md:text-8xl font-black tracking-tight mb-6`}>
+            Manifesto
           </h1>
-          <p className="mt-4 text-xl text-gray-500">
-            Pensamientos, tutoriales y cosas de código.
+          <p className="max-w-xl text-lg text-gray-600 font-light leading-relaxed border-l border-gray-400 pl-6 ml-2">
+            A collection of thoughts, technical breakdowns, and explorations into the digital ether.
           </p>
         </div>
 
-        <div className="space-y-6">
+        {/* LISTA DE ARTÍCULOS (Estilo Editorial) */}
+        <div className="flex flex-col">
           {articles.length > 0 ? (
             articles.map((article) => (
               <article 
                 key={article.id} 
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                className="group border-t border-[#1a1a1a]/10 py-12 transition-all hover:bg-white/40"
               >
-                <div className="p-6">
-                  <div className="flex justify-between items-baseline">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                      <Link href={`/blog/${article.slug}`} className="hover:text-blue-600 transition-colors">
-                        {article.title}
-                      </Link>
+                <Link href={`/blog/${article.slug}`} className="block">
+                  <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 mb-4">
+                    
+                    {/* FECHA (Estilo Código) */}
+                    <span className="font-mono text-xs text-gray-500 uppercase tracking-widest min-w-[120px]">
+                      {new Date(article.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    </span>
+
+                    {/* TÍTULO */}
+                    <h2 className={`${playfair.className} text-3xl md:text-4xl font-bold flex-grow group-hover:italic transition-all duration-300`}>
+                      {article.title}
                     </h2>
-                    <span className="text-sm text-gray-400">
-                      {new Date(article.createdAt).toLocaleDateString()}
+
+                    {/* FLECHA DECORATIVA (Solo visible en Desktop al hover) */}
+                    <span className="hidden md:block opacity-0 group-hover:opacity-100 transform -translate-x-4 group-hover:translate-x-0 transition-all duration-300">
+                      →
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between mt-4">
-                    <Link 
-                      href={`/blog/${article.slug}`}
-                      className="text-blue-600 font-medium hover:text-blue-800"
-                    >
-                      Leer más →
-                    </Link>
-                    
-                    {article.tags && article.tags.length > 0 && (
-                        <div className="flex gap-2">
-                            {article.tags.map((tag: any, index: number) => (
-                                <span key={index} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">
-                                    #{typeof tag === 'string' ? tag : tag.name}
-                                </span>
-                            ))}
-                        </div>
-                    )}
+                  {/* TAGS */}
+                  <div className="md:pl-[120px] flex gap-3 mt-2">
+                     {article.tags && article.tags.length > 0 && article.tags.map((tag: any, index: number) => (
+                        <span key={index} className="text-[10px] font-mono uppercase tracking-wider border border-gray-300 rounded-full px-3 py-1 text-gray-500 group-hover:border-[#1a1a1a] group-hover:text-[#1a1a1a] transition-colors">
+                            {typeof tag === 'string' ? tag : tag.name}
+                        </span>
+                     ))}
                   </div>
-                </div>
+                </Link>
               </article>
             ))
           ) : (
-            <div className="text-center py-12 bg-white rounded-xl shadow p-8">
-              <p className="text-gray-500 text-lg mb-2">No hay artículos públicos todavía.</p>
-              <p className="text-sm text-gray-400">
-                (Ve al Admin y asegúrate de marcar la casilla "Publicar")
+            <div className="py-24 text-center border-y border-[#1a1a1a]/10">
+              <p className={`${playfair.className} text-2xl text-gray-400 italic`}>
+                "The pages are currently blank."
               </p>
             </div>
           )}
+          
+          {/* Línea final de cierre */}
+          <div className="border-t border-[#1a1a1a]/10 w-full" />
         </div>
       </div>
     </div>
