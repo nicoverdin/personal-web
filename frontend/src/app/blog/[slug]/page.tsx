@@ -45,7 +45,7 @@ export default async function ArticlePage({ params }: Props) {
           </Link>
           <h1 className="text-4xl font-extrabold text-gray-900 mb-4">{article.title}</h1>
         </div>
-        <div className="text-gray-800 leading-relaxed">
+        <div className="prose prose-lg prose-blue max-w-none text-gray-800">
           <ReactMarkdown>{article.content}</ReactMarkdown>
         </div>
       </article>
