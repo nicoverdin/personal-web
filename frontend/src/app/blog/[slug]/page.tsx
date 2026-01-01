@@ -1,12 +1,11 @@
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
+import Image from 'next/image'; // Importamos Image para la portada
 import { Playfair_Display, Inter } from 'next/font/google';
 
-// Configuración de fuentes
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'] });
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500'] });
 
-// Forzar renderizado dinámico
 export const dynamic = 'force-dynamic'; 
 
 async function getArticle(slug: string) {
@@ -29,7 +28,6 @@ type Props = {
 export default async function ArticlePage({ params }: Props) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
-
   const article = await getArticle(slug);
 
   if (!article) {
@@ -61,12 +59,11 @@ export default async function ArticlePage({ params }: Props) {
         </div>
 
         {/* CABECERA DEL ARTÍCULO */}
-        <header className="mb-16 border-b border-[#1a1a1a]/10 pb-12">
-          <div className="flex gap-4 items-center mb-6">
+        <header className="mb-12 border-b border-[#1a1a1a]/10 pb-12">
+          <div className="flex flex-wrap gap-4 items-center mb-8">
             <span className="text-xs font-mono uppercase tracking-widest text-gray-400 border border-gray-300 rounded-full px-3 py-1">
               {new Date(article.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </span>
-            {/* Renderizado de Tags en cabecera */}
             {article.tags && article.tags.map((tag: any, idx: number) => (
                <span key={idx} className="text-xs font-mono uppercase tracking-widest text-gray-400">
                   #{typeof tag === 'string' ? tag : tag.name}
@@ -74,10 +71,30 @@ export default async function ArticlePage({ params }: Props) {
             ))}
           </div>
 
-          <h1 className={`${playfair.className} text-5xl md:text-6xl font-black leading-tight tracking-tight text-[#1a1a1a]`}>
+          <h1 className={`${playfair.className} text-5xl md:text-6xl font-black leading-tight tracking-tight text-[#1a1a1a] mb-8`}>
             {article.title}
           </h1>
+
+          {/* ✍️ EXTRACTO (Si existe) */}
+          {article.excerpt && (
+            <p className="text-xl text-gray-500 font-light leading-relaxed italic border-l-2 border-gray-200 pl-6 mb-8">
+              {article.excerpt}
+            </p>
+          )}
         </header>
+
+        {/* 🖼️ IMAGEN DE PORTADA (Si existe) */}
+        {article.coverImage && (
+          <div className="relative w-full h-[400px] mb-16 overflow-hidden border border-[#1a1a1a]/10 group">
+            <Image 
+              src={article.coverImage} 
+              alt={article.title} 
+              fill 
+              className="object-cover transition-all duration-1000 filter grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100"
+              priority
+            />
+          </div>
+        )}
 
         {/* CONTENIDO (PROSE PERSONALIZADO) */}
         <div className={`
@@ -96,9 +113,9 @@ export default async function ArticlePage({ params }: Props) {
 
         {/* PIE DEL ARTÍCULO */}
         <div className="mt-20 pt-12 border-t border-[#1a1a1a]/10 flex justify-between items-center">
-            <p className={`${playfair.className} italic text-gray-400`}>End of file.</p>
+            <p className={`${playfair.className} italic text-gray-400`}>End of record.</p>
             <Link href="/blog" className="text-sm font-bold uppercase tracking-widest hover:underline">
-              Read Next →
+              Browse More →
             </Link>
         </div>
 
