@@ -2,9 +2,9 @@ export class Project {
     id: string;
     title: string;
     description: string;
-    url?: string;
-    image?: string;
-    repoUrl?: string;
+    url?: string | null;
+    image?: string | null;
+    repoUrl?: string | null;
     createdAt: Date;
     updatedAt: Date;
 

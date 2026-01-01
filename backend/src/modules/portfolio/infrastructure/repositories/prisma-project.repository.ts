@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ProjectRepository } from '../domain/project.repository';
-import { Project } from '../domain/project.entity';
-import { ProjectMapper } from './project.mapper';
+import { ProjectRepository } from '../../domain/project.repository';
+import { Project } from '../../domain/project.entity';
+import { ProjectMapper } from '../project.mapper';
 import { Project as PrismaProject } from '@prisma/client';
 import { PrismaService } from 'src/common/prisma.service';
 
@@ -12,12 +12,11 @@ export class PrismaProjectRepository implements ProjectRepository {
   async create(project: Project): Promise<Project> {
     const saved = await this.prisma.project.create({
       data: {
-        id: project.id,
         title: project.title,
         description: project.description,
-        url: project.url,
-        image: project.image,
-        repoUrl: project.repoUrl,
+        url: project.url || null,
+        image: project.image || null,
+        repoUrl: project.repoUrl || null,
       },
     });
     return ProjectMapper.toDomain(saved);
@@ -32,5 +31,19 @@ export class PrismaProjectRepository implements ProjectRepository {
     const raw = await this.prisma.project.findUnique({ where: { id } });
     if (!raw) return null;
     return ProjectMapper.toDomain(raw);
+  }
+
+  async update(id: string, data: any): Promise<Project> {
+    const updated = await this.prisma.project.update({
+      where: { id },
+      data,
+    });
+    return new Project(updated as any);
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.project.delete({
+      where: { id },
+    });
   }
 }

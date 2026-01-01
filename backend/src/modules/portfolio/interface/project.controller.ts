@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Patch, Param, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ProjectService } from '../application/project.service';
 import { CreateProjectDto } from '../application/create-project.dto';
@@ -16,5 +16,15 @@ export class ProjectController {
   @Get()
   async findAll() {
     return this.projectService.getAllProjects();
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() data: any) {
+    return this.projectService.updateProject(id, data);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.projectService.deleteProject(id);
   }
 }

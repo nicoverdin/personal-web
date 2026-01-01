@@ -18,4 +18,12 @@ export class ProjectService {
   async getAllProjects(): Promise<Project[]> {
     return this.projectRepo.findAll();
   }
+
+  async updateProject(id: string, data: any): Promise<Project> {
+    return this.projectRepo.update(id, data);
+  }
+
+  async deleteProject(id: string): Promise<void> {
+    return this.projectRepo.delete(id);
+  }
 }
