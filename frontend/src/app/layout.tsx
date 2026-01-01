@@ -4,8 +4,8 @@ import Navbar from "../components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Mi Web Personal",
-  description: "Portafolio y Blog creado con Next.js y NestJS",
+  title: "Nicolás Verdín Domínguez",
+  description: "Creado con Next.js y NestJS",
 };
 
 export default function RootLayout({
