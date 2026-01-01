@@ -322,8 +322,52 @@ export default function AdminPage() {
             </form>
           )}
         </div>
-        
-        {/* ... (Resto del listado igual) */}
+
+        {/* LISTADO DE ITEMS */}
+        <div>
+           <div className="flex items-center gap-4 mb-6">
+              <h3 className={`${playfair.className} text-xl font-bold text-[#1a1a1a]`}>Library Archive</h3>
+              <div className="h-[1px] bg-gray-200 flex-grow"></div>
+           </div>
+
+           <div className="space-y-3">
+               {/* Lista Proyectos */}
+               {activeTab === 'projects' && Array.isArray(projectsList) && projectsList.map(p => (
+               <div key={p.id} className="bg-white p-5 border border-gray-100 flex justify-between items-center group hover:border-[#1a1a1a]/20 transition-all">
+                   <div>
+                   <p className="font-bold text-[#1a1a1a] mb-1">{p.title}</p>
+                   <div className="flex gap-3 text-[10px] uppercase tracking-wider text-gray-400">
+                       {p.url && <a href={p.url} target="_blank" className="hover:text-[#1a1a1a]">Live View ↗</a>}
+                       {p.repoUrl && <a href={p.repoUrl} target="_blank" className="hover:text-[#1a1a1a]">Source ↗</a>}
+                   </div>
+                   </div>
+                   <div className="flex gap-3 opacity-40 group-hover:opacity-100 transition-opacity">
+                   <button onClick={() => startEditing(p, 'project')} className="text-amber-600 hover:text-amber-800 font-mono text-xs">[ Edit ]</button>
+                   <button onClick={() => handleDelete('projects', p.id)} className="text-red-500 hover:text-red-700 font-mono text-xs">[ Delete ]</button>
+                   </div>
+               </div>
+               ))}
+               
+               {/* Lista Artículos */}
+               {activeTab === 'articles' && Array.isArray(articlesList) && articlesList.map(a => (
+               <div key={a.id} className="bg-white p-5 border border-gray-100 flex justify-between items-center group hover:border-[#1a1a1a]/20 transition-all">
+                   <div>
+                   <div className="flex items-center gap-3 mb-1">
+                       <p className="font-bold text-[#1a1a1a]">{a.title}</p>
+                       <span className={`text-[9px] uppercase tracking-widest px-2 py-0.5 border ${a.isVisible ? 'border-green-200 text-green-700 bg-green-50' : 'border-gray-200 text-gray-500 bg-gray-50'}`}>
+                       {a.isVisible ? 'Published' : 'Draft'}
+                       </span>
+                   </div>
+                   <p className="text-xs font-mono text-gray-400">/{a.slug}</p>
+                   </div>
+                   <div className="flex gap-3 opacity-40 group-hover:opacity-100 transition-opacity">
+                   <button onClick={() => startEditing(a, 'article')} className="text-amber-600 hover:text-amber-800 font-mono text-xs">[ Edit ]</button>
+                   <button onClick={() => handleDelete('articles', a.id)} className="text-red-500 hover:text-red-700 font-mono text-xs">[ Delete ]</button>
+                   </div>
+               </div>
+               ))}
+           </div>
+        </div>
       </div>
     </div>
   );
