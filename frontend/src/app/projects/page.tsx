@@ -87,11 +87,10 @@ export default async function ProjectsPage() {
                     <span className="text-xs font-mono text-gray-400">REF-{project.id.substring(0,4).toUpperCase()}</span>
                     </div>
                     
-                    <p className="text-sm text-gray-600 leading-relaxed mb-6 line-clamp-3 font-light flex-grow">
-                    {project.description}
+                    <p className="text-sm text-gray-600 leading-relaxed mb-6 line-clamp-3 overflow-hidden font-light flex-grow">
+                      {project.description}
                     </p>
                     
-                    {/* 👇 CAMBIO: Quitamos botones y ponemos indicación de ver más */}
                     <div className="pt-4 border-t border-dashed border-gray-300 mt-auto">
                         <span className="text-xs font-bold uppercase tracking-widest text-[#1a1a1a] group-hover:opacity-70 transition-opacity">
                             View Details →
