@@ -20,4 +20,12 @@ export class CreateArticleDto {
   @IsArray()
   @IsOptional()
   tags?: string[];
+
+  @IsString()
+  @IsOptional()
+  excerpt?: string;
+
+  @IsString()
+  @IsOptional()
+  coverImage?: string;
 }
