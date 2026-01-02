@@ -97,10 +97,14 @@ export default async function ArticlePage({ params }: Props) {
             prose-p:text-gray-700 prose-p:font-light prose-p:leading-relaxed
             prose-a:text-[#1a1a1a] prose-a:underline prose-a:underline-offset-4 prose-a:decoration-1 hover:prose-a:decoration-2
             prose-blockquote:border-l-[#1a1a1a] prose-blockquote:italic prose-blockquote:font-serif
-            prose-code:text-[#1a1a1a] prose-code:bg-gray-200 prose-code:px-1 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-            prose-pre:bg-[#1a1a1a] prose-pre:text-gray-100
+            
+            prose-code:text-[#1a1a1a] prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
+            prose-code:before:content-none prose-code:after:content-none
+            prose-pre:bg-[#1a1a1a] prose-pre:text-gray-100 prose-pre:rounded-md prose-pre:shadow-sm
+            
+            prose-img:rounded-sm prose-img:shadow-md
+            
             prose-li:text-gray-700
-            prose-img:rounded-sm prose-img:grayscale hover:prose-img:grayscale-0 prose-img:transition-all prose-img:duration-500
         `}>
           <ReactMarkdown>{article.content}</ReactMarkdown>
         </div>
