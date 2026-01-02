@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import Script from
+import Script from 'next/script';
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "@/components/Footer";
@@ -30,7 +30,6 @@ export const metadata: Metadata = {
     creator: "@verdin3c",
   },
 };
-
 
 export const viewport: Viewport = {
   width: "device-width",
