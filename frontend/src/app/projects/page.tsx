@@ -100,9 +100,6 @@ export default async function ProjectsPage() {
                         <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1a1a1a]">
                             Explore Project →
                         </span>
-                        <div className="md:hidden w-6 h-6 rounded-full border border-black/5 flex items-center justify-center">
-                          <span className="text-xs">↗</span>
-                        </div>
                     </div>
                 </div>
                 </article>

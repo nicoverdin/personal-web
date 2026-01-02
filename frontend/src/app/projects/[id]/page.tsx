@@ -107,7 +107,6 @@ export default async function ProjectDetail({ params }: Props) {
                                 className="group flex justify-between items-center w-full py-5 px-6 border border-[#1a1a1a]/10 bg-white md:bg-transparent md:border-[#1a1a1a]/20 active:bg-[#1a1a1a] active:text-white md:hover:bg-[#1a1a1a] md:hover:text-white transition-all duration-300"
                             >
                                 <span className="text-xs md:text-sm font-bold uppercase tracking-widest">Live Demonstration</span>
-                                <span className="group-hover:translate-x-1 transition-transform">↗</span>
                             </a>
                         )}
                         
@@ -119,7 +118,6 @@ export default async function ProjectDetail({ params }: Props) {
                                 className="group flex justify-between items-center w-full py-5 px-6 border border-[#1a1a1a]/10 bg-white md:bg-transparent md:border-[#1a1a1a]/20 active:bg-[#1a1a1a] active:text-white md:hover:bg-[#1a1a1a] md:hover:text-white transition-all duration-300"
                             >
                                 <span className="text-xs md:text-sm font-bold uppercase tracking-widest">Source Code (GitHub)</span>
-                                <span className="group-hover:translate-x-1 transition-transform">↗</span>
                             </a>
                         )}
 
