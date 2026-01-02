@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image'; // Importado para las portadas
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Playfair_Display, Inter } from 'next/font/google';
 
@@ -13,8 +13,8 @@ type Article = {
   title: string;
   slug: string;
   content: string;
-  excerpt?: string;      // Nuevo campo
-  coverImage?: string;   // Nuevo campo
+  excerpt?: string;
+  coverImage?: string;
   isVisible: boolean;
   createdAt: string;
   tags?: any[];
@@ -84,7 +84,6 @@ export default function BlogPage() {
                 <Link href={`/blog/${article.slug}`} className="block">
                   <div className="flex flex-col md:flex-row gap-8 lg:gap-12">
                     
-                    {/* 🖼️ MINIATURA DE PORTADA (Si existe) */}
                     {article.coverImage && (
                       <div className="relative w-full md:w-64 h-44 overflow-hidden border border-[#1a1a1a]/5 bg-gray-100 shrink-0">
                         <Image 
@@ -106,7 +105,6 @@ export default function BlogPage() {
                         </span>
                       </div>
 
-                      {/* ✍️ EXTRACTO (Si existe) */}
                       {article.excerpt && (
                         <p className="text-sm text-gray-500 font-light leading-relaxed mb-6 line-clamp-2 max-w-2xl">
                           {article.excerpt}

@@ -17,7 +17,6 @@ type Project = {
   repoUrl: string;
 };
 
-// Actualizado con excerpt y coverImage
 type Article = { 
   id: string; 
   title: string; 
@@ -42,7 +41,6 @@ export default function AdminPage() {
     title: '', description: '', url: '', image: '', repoUrl: '' 
   });
   
-  // 1. Añadidos campos al estado inicial de artículos
   const [articleData, setArticleData] = useState({ 
     title: '', slug: '', content: '', excerpt: '', coverImage: '', tags: '', isVisible: false 
   });
@@ -92,7 +90,6 @@ export default function AdminPage() {
         repoUrl: item.repoUrl || ''
       });
     } else {
-      // 2. Cargar datos de edición incluyendo los nuevos campos
       setArticleData({
         title: item.title,
         slug: item.slug,
@@ -129,7 +126,6 @@ export default function AdminPage() {
     setIsLoading(true);
     const cleanData = { ...data };
 
-    // 3. Limpieza de strings vacíos para evitar errores de base de datos
     if (endpoint === 'projects') {
         if (cleanData.url === '') cleanData.url = null;
         if (cleanData.image === '') cleanData.image = null;
@@ -150,7 +146,7 @@ export default function AdminPage() {
       });
       if (!res.ok) throw new Error('Request error');
       
-      alert(editingId ? 'Updated! 🔄' : 'Created! 🎉');
+      alert(editingId ? 'Updated!' : 'Created!');
       resetForm();
       if (endpoint === 'projects') fetchData('projects', setProjectsList);
       else fetchData('articles', setArticlesList);
@@ -277,7 +273,6 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              {/* 4. NUEVOS CAMPOS EN EL FORMULARIO DE ARTÍCULOS */}
               <div>
                 <label className={labelClass}>Excerpt (Brief Summary)</label>
                 <textarea className={inputClass} placeholder="A short summary of the article..." rows={2} value={articleData.excerpt} onChange={e => setArticleData({...articleData, excerpt: e.target.value})} />
@@ -323,7 +318,6 @@ export default function AdminPage() {
           )}
         </div>
 
-        {/* LISTADO DE ITEMS */}
         <div>
            <div className="flex items-center gap-4 mb-6">
               <h3 className={`${playfair.className} text-xl font-bold text-[#1a1a1a]`}>Library Archive</h3>
@@ -348,7 +342,6 @@ export default function AdminPage() {
                </div>
                ))}
                
-               {/* Lista Artículos */}
                {activeTab === 'articles' && Array.isArray(articlesList) && articlesList.map(a => (
                <div key={a.id} className="bg-white p-5 border border-gray-100 flex justify-between items-center group hover:border-[#1a1a1a]/20 transition-all">
                    <div>

@@ -30,7 +30,6 @@ describe('ProjectService', () => {
 
   describe('createProject', () => {
     it('should call the repository and return the new project', async () => {
-      // A. PREPARAR (Arrange)
       const dto: CreateProjectDto = {
         title: 'Test Project',
         description: 'Testing is fun',

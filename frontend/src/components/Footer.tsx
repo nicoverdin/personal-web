@@ -11,7 +11,6 @@ export default function Footer() {
     <footer className={`bg-[#f4f3f0] border-t border-[#1a1a1a]/5 py-12 mt-auto ${inter.className}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-end gap-8">
         
-        {/* IZQUIERDA: Créditos Técnicos */}
         <div className="flex flex-col gap-2">
           <p className={`${playfair.className} text-xl font-bold text-[#1a1a1a]`}>
             Nicolás Verdín Domínguez
@@ -21,7 +20,6 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* DERECHA: Enlaces Sociales (Estilo Texto) */}
         <div className="flex gap-8">
           <FooterLink href="https://github.com/nicoverdin" label="GitHub" />
           <FooterLink href="https://linkedin.com/in/nicolasverdin" label="LinkedIn" />
@@ -32,7 +30,6 @@ export default function Footer() {
   );
 }
 
-// Componente auxiliar para los enlaces del footer
 function FooterLink({ href, label }: { href: string; label: string }) {
   return (
     <a 
@@ -42,7 +39,6 @@ function FooterLink({ href, label }: { href: string; label: string }) {
       className="text-sm font-medium text-gray-500 hover:text-[#1a1a1a] transition-colors relative group"
     >
       {label}
-      {/* Pequeña línea que aparece al hacer hover */}
       <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#1a1a1a] transition-all duration-300 group-hover:w-full"></span>
     </a>
   );

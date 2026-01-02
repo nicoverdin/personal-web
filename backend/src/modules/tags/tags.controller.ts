@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common'; // Quita Patch, Delete
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { TagsService } from './tags.service';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { AuthGuard } from '@nestjs/passport';

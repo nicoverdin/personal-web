@@ -1,8 +1,6 @@
 import Link from 'next/link';
-// Importamos fuentes desde Google Fonts (Next.js las optimiza automáticamente)
 import { Playfair_Display, Inter } from 'next/font/google';
 
-// Configuración de fuentes
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '900'] });
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400'] });
 
@@ -10,17 +8,14 @@ export default function HomePage() {
   return (
     <div className={`min-h-[calc(100vh-64px)] relative flex flex-col justify-center bg-[#f4f3f0] text-[#1a1a1a] overflow-hidden ${inter.className}`}>
       
-      {/* 🎨 TEXTURA DE FONDO (Efecto Papel/Ruido) */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-multiply" 
            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
       </div>
 
-      {/* MARCO DECORATIVO (Estilo Museo) */}
       <div className="absolute top-4 left-4 right-4 bottom-4 border border-[#1a1a1a]/10 pointer-events-none z-10" />
 
       <main className="relative z-20 max-w-6xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
-        {/* IZQUIERDA: La "Obra de Arte" (Tu Nombre) */}
         <div className="lg:col-span-8 flex flex-col justify-center">
           <p className="text-sm tracking-[0.2em] uppercase text-gray-500 mb-4 border-l-2 border-red-600 pl-3">
             Full Stack Developer • AI • Security
@@ -39,10 +34,8 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* DERECHA: Navegación / "Placa del Museo" */}
         <div className="lg:col-span-4 flex flex-col gap-10 lg:items-end lg:text-right border-t lg:border-t-0 lg:border-l border-gray-300 pt-8 lg:pt-0 lg:pl-12">
           
-          {/* Menú de Navegación Minimalista */}
           <nav className="flex flex-col gap-4">
             <Link href="/projects" className="group">
               <span className={`${playfair.className} text-3xl hover:italic transition-all duration-300 border-b border-transparent group-hover:border-black`}>
@@ -63,7 +56,6 @@ export default function HomePage() {
             </Link>
           </nav>
 
-          {/* Iconos Sociales Estilizados */}
           <div className="flex gap-6 mt-4">
              {/* GitHub */}
              <SocialLink href="https://github.com/nicoverdin">
@@ -89,13 +81,10 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* FOOTER DECORATIVO */}
     </div>
   );
 }
 
-// Componente pequeño para los enlaces sociales minimalistas
-// Componente actualizado para aceptar iconos
 function SocialLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a 

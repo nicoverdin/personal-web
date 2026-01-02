@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
-import Image from 'next/image'; // Importamos Image para la portada
+import Image from 'next/image';
 import { Playfair_Display, Inter } from 'next/font/google';
 
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'] });
@@ -43,14 +43,12 @@ export default async function ArticlePage({ params }: Props) {
   return (
     <div className={`min-h-screen relative bg-[#f4f3f0] text-[#1a1a1a] ${inter.className}`}>
       
-      {/* 🎨 TEXTURA DE FONDO */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-multiply fixed" 
            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
       </div>
 
       <article className="relative z-10 max-w-3xl mx-auto py-20 px-6">
         
-        {/* NAVEGACIÓN SUPERIOR */}
         <div className="mb-12">
           <Link href="/blog" className="inline-block text-xs font-mono uppercase tracking-widest text-gray-500 hover:text-[#1a1a1a] transition-colors group">
             <span className="inline-block transition-transform group-hover:-translate-x-1 mr-2">←</span>
@@ -58,7 +56,6 @@ export default async function ArticlePage({ params }: Props) {
           </Link>
         </div>
 
-        {/* CABECERA DEL ARTÍCULO */}
         <header className="mb-12 border-b border-[#1a1a1a]/10 pb-12">
           <div className="flex flex-wrap gap-4 items-center mb-8">
             <span className="text-xs font-mono uppercase tracking-widest text-gray-400 border border-gray-300 rounded-full px-3 py-1">
@@ -75,7 +72,6 @@ export default async function ArticlePage({ params }: Props) {
             {article.title}
           </h1>
 
-          {/* ✍️ EXTRACTO (Si existe) */}
           {article.excerpt && (
             <p className="text-xl text-gray-500 font-light leading-relaxed italic border-l-2 border-gray-200 pl-6 mb-8">
               {article.excerpt}
@@ -83,7 +79,6 @@ export default async function ArticlePage({ params }: Props) {
           )}
         </header>
 
-        {/* 🖼️ IMAGEN DE PORTADA (Si existe) */}
         {article.coverImage && (
           <div className="relative w-full h-[400px] mb-16 overflow-hidden border border-[#1a1a1a]/10 group">
             <Image 
@@ -96,7 +91,6 @@ export default async function ArticlePage({ params }: Props) {
           </div>
         )}
 
-        {/* CONTENIDO (PROSE PERSONALIZADO) */}
         <div className={`
             prose prose-lg max-w-none 
             prose-headings:font-serif prose-headings:${playfair.className} prose-headings:font-bold prose-headings:tracking-tight
@@ -111,7 +105,6 @@ export default async function ArticlePage({ params }: Props) {
           <ReactMarkdown>{article.content}</ReactMarkdown>
         </div>
 
-        {/* PIE DEL ARTÍCULO */}
         <div className="mt-20 pt-12 border-t border-[#1a1a1a]/10 flex justify-between items-center">
             <p className={`${playfair.className} italic text-gray-400`}>End of record.</p>
             <Link href="/blog" className="text-sm font-bold uppercase tracking-widest hover:underline">

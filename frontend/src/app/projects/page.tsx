@@ -16,7 +16,6 @@ type Project = {
   repoUrl?: string | null;
 };
 
-// Función para limitar el texto de forma limpia
 const truncateDescription = (text: string, limit: number = 160) => {
   if (text.length <= limit) return text;
   return text.slice(0, limit).trim() + "...";
@@ -39,14 +38,12 @@ export default async function ProjectsPage() {
   return (
     <div className={`min-h-screen relative bg-[#f4f3f0] text-[#1a1a1a] ${inter.className}`}>
       
-      {/* 🎨 TEXTURA DE FONDO */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-multiply fixed" 
            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 lg:py-28">
         
-        {/* CABECERA DE LA EXPOSICIÓN */}
         <div className="border-b border-[#1a1a1a]/10 pb-12 mb-16">
           <p className="text-xs font-mono uppercase tracking-widest text-gray-500 mb-4">
             Curated Collection 01
@@ -59,13 +56,11 @@ export default async function ProjectsPage() {
           </p>
         </div>
         
-        {/* GALERÍA (GRID) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
           {projects.map((project: Project) => (
             <Link key={project.id} href={`/projects/${project.id}`} className="group block h-full">
                 <article className="flex flex-col h-full cursor-pointer">
                 
-                {/* 🖼️ MARCO DE LA IMAGEN */}
                 <div className="relative h-64 w-full overflow-hidden border border-[#1a1a1a]/10 bg-gray-100 mb-6 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-gray-200">
                     {project.image ? (
                         <Image 
@@ -83,7 +78,6 @@ export default async function ProjectsPage() {
                     )}
                 </div>
 
-                {/* FICHA TÉCNICA */}
                 <div className="flex flex-col flex-grow">
                     <div className="flex justify-between items-baseline mb-3">
                     <h2 className={`${playfair.className} text-2xl font-bold group-hover:underline decoration-1 underline-offset-4 transition-all line-clamp-1`}>
@@ -92,7 +86,6 @@ export default async function ProjectsPage() {
                     <span className="text-xs font-mono text-gray-400 shrink-0 ml-2">REF-{project.id.substring(0,4).toUpperCase()}</span>
                     </div>
                     
-                    {/* ✍️ DESCRIPCIÓN CORREGIDA */}
                     <p className="text-sm text-gray-600 leading-relaxed mb-6 font-light flex-grow overflow-hidden line-clamp-3">
                       {truncateDescription(project.description, 180)}
                     </p>
@@ -107,7 +100,6 @@ export default async function ProjectsPage() {
             </Link>
           ))}
           
-          {/* Mensaje vacío */}
           {projects.length === 0 && (
             <div className="col-span-full py-24 text-center border-y border-[#1a1a1a]/5">
               <p className={`${playfair.className} text-2xl text-gray-400 italic`}>

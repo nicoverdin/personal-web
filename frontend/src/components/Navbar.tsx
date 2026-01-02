@@ -11,8 +11,6 @@ const inter = Inter({ subsets: ['latin'], weight: ['400', '500'] });
 export default function Navbar() {
   const pathname = usePathname();
 
-  // Función para determinar si el enlace está activo
-  // Ahora usa una línea inferior sutil en lugar de volverse azul
   const linkStyles = (path: string) => `
     relative text-sm uppercase tracking-widest transition-colors duration-300
     ${pathname === path ? 'text-[#1a1a1a] font-medium' : 'text-gray-500 hover:text-[#1a1a1a]'}
@@ -21,7 +19,6 @@ export default function Navbar() {
   `;
 
   return (
-    // Fondo #f4f3f0 con transparencia y blur para efecto "vidrio esmerilado"
     <nav className={`bg-[#f4f3f0]/90 backdrop-blur-sm border-b border-[#1a1a1a]/5 sticky top-0 z-50 ${inter.className}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
@@ -33,14 +30,12 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* ENLACES: Estilo Museo (Mayúsculas, espaciados) */}
           <div className="hidden md:flex space-x-12">
             <Link href="/" className={linkStyles('/')}>Home</Link>
             <Link href="/projects" className={linkStyles('/projects')}>Exhibition</Link>
             <Link href="/blog" className={linkStyles('/blog')}>Manifesto</Link>
           </div>
 
-          {/* BOTÓN ADMIN: Minimalista */}
           <div>
             <Link 
               href="/admin" 
