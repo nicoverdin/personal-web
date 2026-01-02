@@ -98,9 +98,24 @@ export default async function ArticlePage({ params }: Props) {
             prose-a:text-[#1a1a1a] prose-a:underline prose-a:underline-offset-4 prose-a:decoration-1 hover:prose-a:decoration-2
             prose-blockquote:border-l-[#1a1a1a] prose-blockquote:italic prose-blockquote:font-serif
             
-            prose-code:text-[#1a1a1a] prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
-            prose-code:before:content-none prose-code:after:content-none
-            prose-pre:bg-[#1a1a1a] prose-pre:text-gray-100 prose-pre:rounded-md prose-pre:shadow-sm
+            /* BLOQUE DE CÓDIGO (PRE) */
+            prose-pre:bg-[#1a1a1a] 
+            prose-pre:text-gray-100 
+            prose-pre:rounded-none   /* Estilo galería: bordes rectos */
+            prose-pre:p-8            /* Mucho más espacio interno para legibilidad */
+            prose-pre:leading-loose  /* Aumenta el espacio entre líneas de código */
+            prose-pre:shadow-2xl     /* Le da profundidad sobre el fondo claro */
+
+            /* CÓDIGO EN LÍNEA (CODE) */
+            prose-code:text-[#1a1a1a] 
+            prose-code:bg-gray-200/50 
+            prose-code:px-1.5 
+            prose-code:py-0.5 
+            prose-code:rounded-sm 
+            prose-code:font-mono 
+            prose-code:text-[0.9em]
+            prose-code:before:content-none 
+            prose-code:after:content-none
             
             prose-img:rounded-sm prose-img:shadow-md
             
