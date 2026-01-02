@@ -185,37 +185,37 @@ export default function AdminPage() {
     }
   };
 
-  const inputClass = "w-full p-3 border border-gray-200 bg-white text-[#1a1a1a] placeholder-gray-400 focus:border-[#1a1a1a] focus:ring-0 outline-none transition-all font-light text-sm";
-  const labelClass = "block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2";
+  const inputClass = "w-full p-4 border border-gray-200 bg-white text-[#1a1a1a] placeholder-gray-300 focus:border-[#1a1a1a] outline-none transition-all font-light text-base"; // text-base evita zoom en iOS
+  const labelClass = "block text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2";
 
   return (
-    <div className={`min-h-screen bg-[#f4f3f0] p-6 md:p-12 text-[#1a1a1a] ${inter.className}`}>
+    <div className={`min-h-screen bg-[#f4f3f0] p-4 md:p-12 text-[#1a1a1a] ${inter.className}`}>
       
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-multiply fixed" 
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-multiply" 
            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto">
-        <div className="flex justify-between items-end mb-12 border-b border-[#1a1a1a]/10 pb-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 border-b border-[#1a1a1a]/10 pb-6 gap-6">
           <div>
-            <p className="text-xs font-mono uppercase tracking-widest text-gray-400 mb-2">System Control</p>
-            <h1 className={`${playfair.className} text-4xl font-bold text-[#1a1a1a]`}>Admin Dashboard</h1>
+            <p className="text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-2">System Control</p>
+            <h1 className={`${playfair.className} text-3xl md:text-4xl font-bold text-[#1a1a1a]`}>Admin Dashboard</h1>
           </div>
-          <button onClick={() => { Cookies.remove('token'); router.push('/'); }} className="text-xs font-bold uppercase tracking-widest text-red-500 hover:text-red-700 hover:bg-red-50 px-4 py-2 transition-all border border-transparent hover:border-red-100">Logout</button>
+          <button onClick={() => { Cookies.remove('token'); router.push('/'); }} className="w-full md:w-auto text-[10px] font-bold uppercase tracking-widest text-red-500 border border-red-200 px-6 py-3 md:py-2 transition-all active:bg-red-50">Logout</button>
         </div>
 
-        <div className="flex space-x-8 mb-8">
-          <button onClick={() => { setActiveTab('projects'); resetForm(); }} className={`pb-2 text-sm uppercase tracking-widest transition-all ${activeTab === 'projects' ? 'border-b-2 border-[#1a1a1a] font-bold text-[#1a1a1a]' : 'text-gray-400 hover:text-gray-600'}`}>Projects</button>
-          <button onClick={() => { setActiveTab('articles'); resetForm(); }} className={`pb-2 text-sm uppercase tracking-widest transition-all ${activeTab === 'articles' ? 'border-b-2 border-[#1a1a1a] font-bold text-[#1a1a1a]' : 'text-gray-400 hover:text-gray-600'}`}>Articles</button>
+        <div className="flex space-x-8 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+          <button onClick={() => { setActiveTab('projects'); resetForm(); }} className={`pb-2 text-[10px] uppercase tracking-[0.2em] transition-all shrink-0 ${activeTab === 'projects' ? 'border-b-2 border-[#1a1a1a] font-bold text-[#1a1a1a]' : 'text-gray-400'}`}>Projects</button>
+          <button onClick={() => { setActiveTab('articles'); resetForm(); }} className={`pb-2 text-[10px] uppercase tracking-[0.2em] transition-all shrink-0 ${activeTab === 'articles' ? 'border-b-2 border-[#1a1a1a] font-bold text-[#1a1a1a]' : 'text-gray-400'}`}>Articles</button>
         </div>
 
-        <div className="bg-white border border-[#1a1a1a]/5 p-8 shadow-xl shadow-[#1a1a1a]/5 mb-12 relative">
-          <div className="flex justify-between items-baseline mb-8 border-b border-gray-100 pb-4">
-            <h2 className={`${playfair.className} text-2xl font-bold text-[#1a1a1a]`}>
-              {editingId ? `Editing ${activeTab === 'projects' ? 'Project' : 'Article'}` : `New Entry: ${activeTab === 'projects' ? 'Project' : 'Article'}`}
+        <div className="bg-white border border-[#1a1a1a]/5 p-5 md:p-8 shadow-xl shadow-[#1a1a1a]/5 mb-12">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-baseline mb-8 border-b border-gray-100 pb-4 gap-4">
+            <h2 className={`${playfair.className} text-xl md:text-2xl font-bold text-[#1a1a1a]`}>
+              {editingId ? `Editing ${activeTab === 'projects' ? 'Project' : 'Article'}` : `New ${activeTab === 'projects' ? 'Project' : 'Article'}`}
             </h2>
             {editingId && (
-              <button onClick={resetForm} className="text-xs font-mono text-gray-400 hover:text-[#1a1a1a] border-b border-gray-300 hover:border-[#1a1a1a] transition-all">Cancel Editing</button>
+              <button onClick={resetForm} className="text-[10px] font-mono text-gray-400 border-b border-gray-300">Cancel Editing</button>
             )}
           </div>
 
@@ -223,39 +223,39 @@ export default function AdminPage() {
             <form onSubmit={handleProjectSubmit} className="space-y-6">
               <div>
                 <label className={labelClass}>Project Title</label>
-                <input className={inputClass} placeholder="e.g. Minimalist E-commerce" value={projectData.title} onChange={e => setProjectData({...projectData, title: e.target.value})} required />
+                <input className={inputClass} placeholder="Title" value={projectData.title} onChange={e => setProjectData({...projectData, title: e.target.value})} required />
               </div>
               <div>
                 <label className={labelClass}>Description</label>
-                <textarea className={inputClass} placeholder="Brief overview of the project..." rows={3} value={projectData.description} onChange={e => setProjectData({...projectData, description: e.target.value})} required />
+                <textarea className={inputClass} placeholder="Overview..." rows={4} value={projectData.description} onChange={e => setProjectData({...projectData, description: e.target.value})} required />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                    <label className={labelClass}>Live URL</label>
-                   <input className={inputClass} placeholder="https://..." value={projectData.url} onChange={e => setProjectData({...projectData, url: e.target.value})} />
+                   <input className={inputClass} type="url" placeholder="https://..." value={projectData.url} onChange={e => setProjectData({...projectData, url: e.target.value})} />
                 </div>
                 <div>
-                   <label className={labelClass}>Repository URL</label>
-                   <input className={inputClass} placeholder="https://github.com/..." value={projectData.repoUrl} onChange={e => setProjectData({...projectData, repoUrl: e.target.value})} />
+                   <label className={labelClass}>Repository</label>
+                   <input className={inputClass} type="url" placeholder="https://github..." value={projectData.repoUrl} onChange={e => setProjectData({...projectData, repoUrl: e.target.value})} />
                 </div>
               </div>
               <div>
-                <label className={labelClass}>Cover Image</label>
-                <div className="flex gap-4 items-center">
-                  <label className={`cursor-pointer flex items-center gap-2 px-4 py-3 border border-gray-200 bg-white hover:bg-gray-50 transition-colors rounded ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
-                    <span className="text-xs font-bold uppercase tracking-widest text-[#1a1a1a]">{isUploading ? 'Uploading...' : 'Choose File'}</span>
+                <label className={labelClass}>Visual Asset</label>
+                <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                  <label className={`w-full sm:w-auto cursor-pointer flex items-center justify-center gap-2 px-6 py-4 border border-gray-200 bg-white active:bg-gray-50 transition-colors ${isUploading ? 'opacity-50' : ''}`}>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]">{isUploading ? 'Uploading...' : 'Upload Image'}</span>
                     <input type="file" accept="image/*" className="hidden" onChange={(e) => handleFileUpload(e, 'projects')} disabled={isUploading} />
                   </label>
                   {projectData.image && (
-                    <div className="flex items-center gap-2">
-                      <img src={projectData.image} alt="Preview" className="h-10 w-10 object-cover rounded border border-gray-200" />
-                      <button type="button" onClick={() => setProjectData({...projectData, image: ''})} className="text-red-500 text-xs hover:underline">Remove</button>
+                    <div className="flex items-center gap-4 w-full sm:w-auto p-2 border border-gray-100 rounded">
+                      <img src={projectData.image} alt="Preview" className="h-12 w-12 object-cover" />
+                      <button type="button" onClick={() => setProjectData({...projectData, image: ''})} className="text-red-500 text-[10px] uppercase font-bold">Remove</button>
                     </div>
                   )}
                 </div>
               </div>
-              <button disabled={isLoading} className={`w-full py-3 px-6 text-xs font-bold uppercase tracking-widest text-white transition-all ${editingId ? 'bg-amber-600 hover:bg-amber-700' : 'bg-[#1a1a1a] hover:bg-gray-800'}`}>
-                {isLoading ? 'Processing...' : (editingId ? 'Update Project' : 'Save Project')}
+              <button disabled={isLoading} className={`w-full py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all active:scale-[0.98] ${editingId ? 'bg-amber-600' : 'bg-[#1a1a1a]'}`}>
+                {isLoading ? 'Processing...' : (editingId ? 'Update Entry' : 'Commit Entry')}
               </button>
             </form>
           )}
@@ -265,53 +265,53 @@ export default function AdminPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className={labelClass}>Title</label>
-                  <input className={inputClass} placeholder="Article Title" value={articleData.title} onChange={e => setArticleData({...articleData, title: e.target.value})} required />
+                  <input className={inputClass} value={articleData.title} onChange={e => setArticleData({...articleData, title: e.target.value})} required />
                 </div>
                 <div>
                   <label className={labelClass}>Slug</label>
-                  <input className={inputClass} placeholder="my-article-slug" value={articleData.slug} onChange={e => setArticleData({...articleData, slug: e.target.value})} required />
+                  <input className={inputClass} value={articleData.slug} onChange={e => setArticleData({...articleData, slug: e.target.value})} required />
                 </div>
               </div>
 
               <div>
-                <label className={labelClass}>Excerpt (Brief Summary)</label>
-                <textarea className={inputClass} placeholder="A short summary of the article..." rows={2} value={articleData.excerpt} onChange={e => setArticleData({...articleData, excerpt: e.target.value})} />
+                <label className={labelClass}>Summary</label>
+                <textarea className={inputClass} rows={3} value={articleData.excerpt} onChange={e => setArticleData({...articleData, excerpt: e.target.value})} />
               </div>
 
               <div>
                 <label className={labelClass}>Cover Image</label>
-                <div className="flex gap-4 items-center">
-                  <label className={`cursor-pointer flex items-center gap-2 px-4 py-3 border border-gray-200 bg-white hover:bg-gray-50 transition-colors rounded ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
-                    <span className="text-xs font-bold uppercase tracking-widest text-[#1a1a1a]">{isUploading ? 'Uploading...' : 'Choose File'}</span>
+                <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                  <label className={`w-full sm:w-auto cursor-pointer flex items-center justify-center gap-2 px-6 py-4 border border-gray-200 bg-white active:bg-gray-50 ${isUploading ? 'opacity-50' : ''}`}>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]">{isUploading ? 'Uploading...' : 'Upload Image'}</span>
                     <input type="file" accept="image/*" className="hidden" onChange={(e) => handleFileUpload(e, 'articles')} disabled={isUploading} />
                   </label>
                   {articleData.coverImage && (
-                    <div className="flex items-center gap-2">
-                      <img src={articleData.coverImage} alt="Preview" className="h-10 w-10 object-cover rounded border border-gray-200" />
-                      <button type="button" onClick={() => setArticleData({...articleData, coverImage: ''})} className="text-red-500 text-xs hover:underline">Remove</button>
+                    <div className="flex items-center gap-4 p-2 border border-gray-100">
+                      <img src={articleData.coverImage} alt="Preview" className="h-12 w-12 object-cover" />
+                      <button type="button" onClick={() => setArticleData({...articleData, coverImage: ''})} className="text-red-500 text-[10px] font-bold uppercase">Remove</button>
                     </div>
                   )}
                 </div>
               </div>
 
               <div>
-                <label className={labelClass}>Content (Markdown)</label>
-                <textarea className={`${inputClass} font-mono text-xs leading-relaxed`} placeholder="# Write something amazing..." rows={12} value={articleData.content} onChange={e => setArticleData({...articleData, content: e.target.value})} required />
+                <label className={labelClass}>Manifesto Content (Markdown)</label>
+                <textarea className={`${inputClass} font-mono text-[13px] leading-relaxed`} placeholder="# Content..." rows={15} value={articleData.content} onChange={e => setArticleData({...articleData, content: e.target.value})} required />
               </div>
               
               {!editingId && (
                   <div>
-                    <label className={labelClass}>Tags (Comma separated)</label>
-                    <input className={inputClass} placeholder="React, Design, Tutorial..." value={articleData.tags} onChange={e => setArticleData({...articleData, tags: e.target.value})} />
+                    <label className={labelClass}>Classification Tags</label>
+                    <input className={inputClass} placeholder="Security, AI, Rust..." value={articleData.tags} onChange={e => setArticleData({...articleData, tags: e.target.value})} />
                   </div>
               )}
               
-              <div className="flex items-center gap-3 py-2">
-                <input type="checkbox" id="visible" className="w-4 h-4 accent-[#1a1a1a]" checked={articleData.isVisible} onChange={e => setArticleData({...articleData, isVisible: e.target.checked})} />
-                <label htmlFor="visible" className="text-sm font-medium text-[#1a1a1a]">Publish immediately</label>
+              <div className="flex items-center gap-4 py-4 border-y border-gray-50">
+                <input type="checkbox" id="visible" className="w-5 h-5 accent-[#1a1a1a]" checked={articleData.isVisible} onChange={e => setArticleData({...articleData, isVisible: e.target.checked})} />
+                <label htmlFor="visible" className="text-xs font-bold uppercase tracking-widest text-[#1a1a1a]">Visible in Public Manifesto</label>
               </div>
               
-              <button disabled={isLoading} className={`w-full py-3 px-6 text-xs font-bold uppercase tracking-widest text-white transition-all ${editingId ? 'bg-amber-600 hover:bg-amber-700' : 'bg-[#1a1a1a] hover:bg-gray-800'}`}>
+              <button disabled={isLoading} className={`w-full py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-white active:scale-[0.98] ${editingId ? 'bg-amber-600' : 'bg-[#1a1a1a]'}`}>
                 {isLoading ? 'Processing...' : (editingId ? 'Update Article' : 'Publish Article')}
               </button>
             </form>
@@ -319,43 +319,42 @@ export default function AdminPage() {
         </div>
 
         <div>
-           <div className="flex items-center gap-4 mb-6">
-              <h3 className={`${playfair.className} text-xl font-bold text-[#1a1a1a]`}>Library Archive</h3>
-              <div className="h-[1px] bg-gray-200 flex-grow"></div>
+           <div className="flex items-center gap-4 mb-8">
+              <h3 className={`${playfair.className} text-lg md:text-xl font-bold text-[#1a1a1a]`}>Library Archive</h3>
+              <div className="h-px bg-gray-200 grow"></div>
            </div>
 
-           <div className="space-y-3">
-               {/* Lista Proyectos */}
+           <div className="grid grid-cols-1 gap-4">
                {activeTab === 'projects' && Array.isArray(projectsList) && projectsList.map(p => (
-               <div key={p.id} className="bg-white p-5 border border-gray-100 flex justify-between items-center group hover:border-[#1a1a1a]/20 transition-all">
-                   <div>
-                   <p className="font-bold text-[#1a1a1a] mb-1">{p.title}</p>
-                   <div className="flex gap-3 text-[10px] uppercase tracking-wider text-gray-400">
-                       {p.url && <a href={p.url} target="_blank" className="hover:text-[#1a1a1a]">Live View ↗</a>}
-                       {p.repoUrl && <a href={p.repoUrl} target="_blank" className="hover:text-[#1a1a1a]">Source ↗</a>}
+               <div key={p.id} className="bg-white p-5 border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 group">
+                   <div className="w-full">
+                    <p className="font-bold text-[#1a1a1a] text-lg mb-2">{p.title}</p>
+                    <div className="flex flex-wrap gap-4 text-[9px] uppercase tracking-wider text-gray-400">
+                        {p.url && <a href={p.url} target="_blank" className="hover:text-black">Demo ↗</a>}
+                        {p.repoUrl && <a href={p.repoUrl} target="_blank" className="hover:text-black">GitHub ↗</a>}
+                    </div>
                    </div>
-                   </div>
-                   <div className="flex gap-3 opacity-40 group-hover:opacity-100 transition-opacity">
-                   <button onClick={() => startEditing(p, 'project')} className="text-amber-600 hover:text-amber-800 font-mono text-xs">[ Edit ]</button>
-                   <button onClick={() => handleDelete('projects', p.id)} className="text-red-500 hover:text-red-700 font-mono text-xs">[ Delete ]</button>
+                   <div className="flex gap-4 w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-t-0 border-gray-50">
+                    <button onClick={() => startEditing(p, 'project')} className="flex-1 sm:flex-none text-amber-600 text-[10px] font-bold uppercase tracking-widest py-2">Edit</button>
+                    <button onClick={() => handleDelete('projects', p.id)} className="flex-1 sm:flex-none text-red-500 text-[10px] font-bold uppercase tracking-widest py-2">Delete</button>
                    </div>
                </div>
                ))}
                
                {activeTab === 'articles' && Array.isArray(articlesList) && articlesList.map(a => (
-               <div key={a.id} className="bg-white p-5 border border-gray-100 flex justify-between items-center group hover:border-[#1a1a1a]/20 transition-all">
-                   <div>
-                   <div className="flex items-center gap-3 mb-1">
-                       <p className="font-bold text-[#1a1a1a]">{a.title}</p>
-                       <span className={`text-[9px] uppercase tracking-widest px-2 py-0.5 border ${a.isVisible ? 'border-green-200 text-green-700 bg-green-50' : 'border-gray-200 text-gray-500 bg-gray-50'}`}>
-                       {a.isVisible ? 'Published' : 'Draft'}
-                       </span>
+               <div key={a.id} className="bg-white p-5 border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 group">
+                   <div className="w-full">
+                    <div className="flex items-center justify-between sm:justify-start gap-4 mb-2">
+                        <p className="font-bold text-[#1a1a1a] text-lg">{a.title}</p>
+                        <span className={`text-[8px] uppercase tracking-[0.2em] px-2 py-1 border ${a.isVisible ? 'border-green-100 text-green-600' : 'border-gray-200 text-gray-400'}`}>
+                        {a.isVisible ? 'Live' : 'Draft'}
+                        </span>
+                    </div>
+                    <p className="text-[10px] font-mono text-gray-400">slug: /{a.slug}</p>
                    </div>
-                   <p className="text-xs font-mono text-gray-400">/{a.slug}</p>
-                   </div>
-                   <div className="flex gap-3 opacity-40 group-hover:opacity-100 transition-opacity">
-                   <button onClick={() => startEditing(a, 'article')} className="text-amber-600 hover:text-amber-800 font-mono text-xs">[ Edit ]</button>
-                   <button onClick={() => handleDelete('articles', a.id)} className="text-red-500 hover:text-red-700 font-mono text-xs">[ Delete ]</button>
+                   <div className="flex gap-4 w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-t-0 border-gray-50">
+                    <button onClick={() => startEditing(a, 'article')} className="flex-1 sm:flex-none text-amber-600 text-[10px] font-bold uppercase tracking-widest py-2">Edit</button>
+                    <button onClick={() => handleDelete('articles', a.id)} className="flex-1 sm:flex-none text-red-500 text-[10px] font-bold uppercase tracking-widest py-2">Delete</button>
                    </div>
                </div>
                ))}

@@ -35,7 +35,7 @@ export default function LoginPage() {
         throw new Error(data.message || 'Login failed');
       }
 
-      Cookies.set('token', data.access_token, { expires: 1 });
+      Cookies.set('token', data.access_token, { expires: 1, sameSite: 'lax' });
 
       router.push('/admin');
       
@@ -47,50 +47,54 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={`min-h-screen relative flex items-center justify-center bg-[#f4f3f0] text-[#1a1a1a] p-4 ${inter.className}`}>
+    <div className={`min-h-screen relative flex items-center justify-center bg-[#f4f3f0] text-[#1a1a1a] p-6 ${inter.className}`}>
       
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-multiply fixed" 
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-multiply" 
            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
       </div>
 
-      <div className="relative z-10 w-full max-w-md bg-[#f4f3f0] border border-[#1a1a1a]/10 p-8 md:p-12 shadow-2xl shadow-[#1a1a1a]/5">
+      <div className="relative z-10 w-full max-w-md bg-[#f4f3f0] border border-[#1a1a1a]/10 p-8 md:p-12 shadow-2xl shadow-[#1a1a1a]/5 backdrop-blur-sm">
         
         <div className="text-center mb-10">
-          <p className="text-xs font-mono uppercase tracking-widest text-gray-500 mb-2">Restricted Area</p>
-          <h1 className={`${playfair.className} text-4xl font-bold text-[#1a1a1a]`}>
-            Welcome Back
+          <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-gray-400 mb-3">
+             Encrypted Terminal
+          </p>
+          <h1 className={`${playfair.className} text-4xl font-bold text-[#1a1a1a] tracking-tight`}>
+            Authorized Only
           </h1>
         </div>
 
         {error && (
-          <div className="mb-6 p-3 border border-red-200 bg-red-50 text-red-800 text-xs font-mono text-center uppercase tracking-wide">
-            Error: {error}
+          <div className="mb-6 p-4 border border-red-200 bg-red-50 text-red-800 text-[10px] font-mono text-center uppercase tracking-widest animate-pulse">
+            Access Denied: {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
-              Email
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="space-y-2">
+            <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+              Identity Identifier
             </label>
             <input
               type="email"
               required
-              className="w-full px-4 py-3 bg-white/50 border border-gray-300 focus:border-[#1a1a1a] focus:ring-0 outline-none transition-colors text-[#1a1a1a] placeholder-gray-400 font-light"
-              placeholder="you@example.com"
+              autoComplete="email"
+              className="w-full px-0 py-3 bg-transparent border-b border-gray-300 focus:border-[#1a1a1a] outline-none transition-all text-[#1a1a1a] placeholder-gray-300 font-light text-base" 
+              placeholder="admin@nicolasverdin.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
-              Password
+          <div className="space-y-2">
+            <label className="block text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+              Access Credentials
             </label>
             <input
               type="password"
               required
-              className="w-full px-4 py-3 bg-white/50 border border-gray-300 focus:border-[#1a1a1a] focus:ring-0 outline-none transition-colors text-[#1a1a1a] placeholder-gray-400 font-light"
+              autoComplete="current-password"
+              className="w-full px-0 py-3 bg-transparent border-b border-gray-300 focus:border-[#1a1a1a] outline-none transition-all text-[#1a1a1a] placeholder-gray-300 font-light text-base"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -100,19 +104,22 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-4 px-4 text-xs font-bold uppercase tracking-widest text-white transition-all duration-300
+            className={`w-full py-5 px-4 text-[10px] font-bold uppercase tracking-[0.3em] text-white transition-all duration-500 mt-4
               ${isLoading 
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-[#1a1a1a] hover:bg-gray-800 hover:shadow-lg'
+                ? 'bg-gray-300 cursor-wait' 
+                : 'bg-[#1a1a1a] active:scale-[0.98] md:hover:bg-gray-800'
               }`}
           >
-            {isLoading ? 'Authenticating...' : 'Enter System'}
+            {isLoading ? 'Verifying...' : 'Establish Connection'}
           </button>
         </form>
 
-        <div className="mt-8 text-center">
-            <button onClick={() => router.push('/')} className="text-xs font-mono text-gray-400 hover:text-[#1a1a1a] border-b border-transparent hover:border-[#1a1a1a] transition-all">
-                ← Return to Public Gallery
+        <div className="mt-12 text-center">
+            <button 
+              onClick={() => router.push('/')} 
+              className="text-[10px] font-mono text-gray-400 hover:text-[#1a1a1a] border-b border-transparent hover:border-[#1a1a1a] transition-all uppercase tracking-widest"
+            >
+                ← Exit to Public Archive
             </button>
         </div>
       </div>
